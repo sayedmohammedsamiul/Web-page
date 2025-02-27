@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Farming Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .hero-section {
+            background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(16, 185, 129, 0.4)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.5s ease-out 0.5s backwards;
+        }
+
+        .hero-buttons {
+            animation: fadeInUp 1.5s ease-out 1s backwards;
+        }
+
+        .hero-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+
+        .hero-button-primary {
+            background: linear-gradient(45deg, #059669, #10B981);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .hero-button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .hero-button-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: floatShape 20s linear infinite;
+        }
+
+        @keyframes floatShape {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        .custom-shape-divider {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .custom-shape-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+
+        .custom-shape-divider .shape-fill {
+            fill: #f9fafb;
+        }
+        .farm-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+        .farm-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px -10px rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.5);
+        }
+        .farm-card img {
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.95) contrast(1.1);
+        }
+        .farm-card:hover img {
+            transform: scale(1.15);
+            filter: brightness(1.1) contrast(1.2);
+        }
+        .image-glow {
+            position: relative;
+        }
+        .image-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            box-shadow: inset 0 0 30px rgba(16, 185, 129, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .farm-card:hover .image-glow::after {
+            opacity: 1;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #059669, #10B981, #059669);
+            background-size: 200% auto;
+            animation: gradientFlow 3s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .button-glow {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .button-glow::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #059669, #10B981, #059669);
+            background-size: 200% 200%;
+            animation: glowingBorder 3s ease infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .button-glow:hover::before {
+            opacity: 1;
+        }
+        @keyframes glowingBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .section-divider {
+            position: relative;
+            height: 100px;
+            overflow: hidden;
+        }
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 25%, rgba(16, 185, 129, 0.1) 50%, transparent 75%);
+            transform: translateY(-50%);
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        .content-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.4));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .farm-card:hover .content-wrapper::before {
+            opacity: 1;
+        }
+        .stats-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+        .stats-card:hover::before {
+            transform: rotate(90deg);
+        }
+        .highlight-number {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #059669, #10B981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .floating-animation {
+            animation: floating 3s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .shine-effect {
+            position: relative;
+        }
+
+        /* Back to Top Button Styles */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, #059669, #10B981);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-button {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #065f46;
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-link {
+                padding: 0.5rem 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-green-700 text-white p-6 fixed w-full z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold flex items-center">
+                <span class="text-4xl mr-2">🌾</span> 
+                <span class="gradient-text">Rajbari Integrated Farming</span>
+            </h1>
+            <button class="mobile-menu-button p-2 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <div class="nav-links space-x-8">
+                <a href="#home" class="nav-link hover:text-green-200 transition-colors">Home</a>
+                <a href="#features" class="nav-link hover:text-green-200 transition-colors">Features</a>
+                <a href="#about" class="nav-link hover:text-green-200 transition-colors">About</a>
+                <a href="#contact" class="nav-link hover:text-green-200 transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Enhanced Hero Section -->
+    <section class="hero-section text-white min-h-screen flex items-center justify-center relative">
+        <div class="floating-shapes">
+            <div class="shape" style="left: 10%; width: 50px; height: 50px; opacity: 0.3; animation-delay: 0s;"></div>
+            <div class="shape" style="left: 30%; width: 70px; height: 70px; opacity: 0.2; animation-delay: 2s;"></div>
+            <div class="shape" style="left: 50%; width: 40px; height: 40px; opacity: 0.4; animation-delay: 4s;"></div>
+            <div class="shape" style="left: 70%; width: 60px; height: 60px; opacity: 0.3; animation-delay: 6s;"></div>
+            <div class="shape" style="left: 90%; width: 45px; height: 45px; opacity: 0.2; animation-delay: 8s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 text-center hero-content py-20">
+            <h1 class="hero-title font-bold mb-8">
+                <span class="block">Rajbari's Premier</span>
+                <span class="block bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-600">
+                    Integrated Farming
+                </span>
+            </h1>
+            <p class="hero-subtitle mb-12 text-gray-200 max-w-3xl mx-auto">
+                Experience the Perfect Blend of Traditional Wisdom and Modern Innovation in Agriculture at the Heart of Bangladesh
+            </p>
+            <div class="hero-buttons flex flex-wrap justify-center gap-6">
+                <button class="hero-button hero-button-primary px-10 py-4 rounded-full font-bold flex items-center">
+                    <i class="fas fa-seedling mr-3"></i>
+                    Explore Our Solutions
+                </button>
+                <button class="hero-button hero-button-secondary px-10 py-4 rounded-full font-bold flex items-center">
+                    <i class="fas fa-map-marker-alt mr-3"></i>
+                    Visit Our Farm
+                </button>
+            </div>
+        </div>
+
+        <div class="custom-shape-divider">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Location Badge -->
+    <div class="relative -mt-20 mb-16 z-10">
+        <div class="container mx-auto px-4">
+            <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl mx-auto transform hover:scale-105 transition-transform duration-300 border border-green-100" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-green-200 rounded-full blur-lg opacity-30 animate-pulse"></div>
+                        <div class="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-full relative">
+                            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-3xl font-bold text-gray-800 mb-3 gradient-text">Rajbari District, Bangladesh</h3>
+                        <p class="text-lg text-gray-600 mb-4">Experience Modern Farming in the Heart of Bangladesh</p>
+                        <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-map-pin mr-2"></i>
+                                <span>Central Location</span>
+                            </div>
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-road mr-2"></i>
+                                <span>Easy Access</span>
+                            </div>
+                            <div class="flex items-center text-green-600">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>Open Daily</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-20 gradient-text" data-aos="fade-up">Our Farming Solutions</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <!-- Cattle Farming -->
+                <div class="farm-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up">
+                    <div class="relative overflow-hidden image-glow">
+                        <img src="https://images.unsplash.com/photo-1596733430284-f7437764b1a9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Cattle Farming" 
+                             class="w-full h-56 object-cover">
+                    </div>
+                    <div class="p-8 content-wrapper">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Local Cattle Farming</h3>
+                        <p class="text-gray-600 leading-relaxed">Premium dairy and beef production using local breed enhancement techniques.</p>
+                    </div>
+                </div>
+
+                <!-- Poultry & Eggs -->
+                <div class="farm-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden image-glow">
+                        <img src="https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Poultry Farming" 
+                             class="w-full h-56 object-cover">
+                    </div>
+                    <div class="p-8 content-wrapper">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Poultry & Eggs</h3>
+                        <p class="text-gray-600 leading-relaxed">High-quality eggs and poultry from Rajbari's finest farm.</p>
+                    </div>
+                </div>
+
+                <!-- Organic Vegetable Farming -->
+                <div class="farm-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden image-glow">
+                        <img src="https://images.unsplash.com/photo-1566385101042-1a0aa0c1268c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Fresh Organic Vegetables from Bangladesh" 
+                             class="w-full h-56 object-cover">
+                    </div>
+                    <div class="p-8 content-wrapper">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Organic Vegetables</h3>
+                        <p class="text-gray-600 leading-relaxed">Fresh, seasonal vegetables including eggplant, okra, spinach, and gourds grown naturally in Rajbari's fertile soil.</p>
+                    </div>
+                </div>
+
+                <!-- Fish Farming -->
+                <div class="farm-card bg-white rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden image-glow">
+                        <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Fish Farming" 
+                             class="w-full h-56 object-cover">
+                    </div>
+                    <div class="p-8 content-wrapper">
+                        <h3 class="text-2xl font-bold mb-3 text-gray-800">Fish Farming</h3>
+                        <p class="text-gray-600 leading-relaxed">Local fish varieties cultivated in modern aquaculture systems.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-green-50 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 gradient-text" data-aos="fade-up">About Our Farm</h2>
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-xl text-gray-700 mb-16 leading-relaxed" data-aos="fade-up">Located in the fertile lands of Rajbari district, our integrated farm combines traditional knowledge with modern farming techniques. We're proud to be a part of Bangladesh's agricultural heritage while pioneering sustainable farming practices for the future.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
+                    <div class="stats-card bg-white p-8 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300" data-aos="fade-up">
+                        <div class="highlight-number mb-4">10+</div>
+                        <h3 class="text-xl font-bold mb-2">Years</h3>
+                        <p class="text-gray-600">Serving Rajbari</p>
+                    </div>
+                    <div class="stats-card bg-white p-8 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                        <div class="highlight-number mb-4">500+</div>
+                        <h3 class="text-xl font-bold mb-2">Families</h3>
+                        <p class="text-gray-600">Regular Customers</p>
+                    </div>
+                    <div class="stats-card bg-white p-8 rounded-2xl shadow-lg transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                        <div class="highlight-number mb-4">100%</div>
+                        <h3 class="text-xl font-bold mb-2">Organic</h3>
+                        <p class="text-gray-600">Farming Methods</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-20 gradient-text" data-aos="fade-up">Why Choose Integrated Farming?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center group" data-aos="fade-up">
+                    <div class="bg-green-50 text-green-600 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
+                        <i class="fas fa-leaf text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Sustainable</h3>
+                    <p class="text-gray-600 leading-relaxed">Environmentally friendly practices that last generations.</p>
+                </div>
+
+                <div class="text-center group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-green-50 text-green-600 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
+                        <i class="fas fa-coins text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Profitable</h3>
+                    <p class="text-gray-600 leading-relaxed">Multiple revenue streams from diverse farming activities.</p>
+                </div>
+
+                <div class="text-center group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-green-50 text-green-600 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6 group-hover:bg-green-600 group-hover:text-white transition-all duration-300">
+                        <i class="fas fa-chart-line text-4xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Efficient</h3>
+                    <p class="text-gray-600 leading-relaxed">Maximized resource utilization through integration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-green-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-20 gradient-text" data-aos="fade-up">Visit Us in Rajbari</h2>
+            
+            <div class="max-w-lg mx-auto bg-white rounded-2xl shadow-xl p-10" data-aos="fade-up">
+                <form class="space-y-8">
+                    <div>
+                        <label class="block text-gray-700 text-lg mb-3" for="name">Name</label>
+                        <input type="text" id="name" class="w-full px-6 py-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-lg mb-3" for="email">Email</label>
+                        <input type="email" id="email" class="w-full px-6 py-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-lg mb-3" for="message">Message</label>
+                        <textarea id="message" rows="4" class="w-full px-6 py-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-green-500 transition-colors"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg">
+                        <i class="fas fa-paper-plane mr-2"></i> Send Message
+                    </button>
+                </form>
+            </div>
+            <div class="text-center mt-12 space-y-4" data-aos="fade-up">
+                <p class="text-xl text-gray-600"><i class="fas fa-map-marker-alt text-green-600 mr-2"></i> Location: Rajbari District, Bangladesh</p>
+                <p class="text-xl text-gray-600"><i class="fas fa-phone text-green-600 mr-2"></i> Phone: +880 1XXX-XXXXXX</p>
+                <p class="text-xl text-gray-600"><i class="fas fa-envelope text-green-600 mr-2"></i> Email: contact@rajbarifarming.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold mb-4">🌾 Rajbari Integrated Farming</h3>
+                <p class="text-green-200">Pioneering Sustainable Agriculture in Bangladesh</p>
+            </div>
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="#" class="text-white hover:text-green-200 transition-colors"><i class="fab fa-facebook text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-green-200 transition-colors"><i class="fab fa-instagram text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-green-200 transition-colors"><i class="fab fa-twitter text-2xl"></i></a>
+                <a href="#" class="text-white hover:text-green-200 transition-colors"><i class="fab fa-youtube text-2xl"></i></a>
+            </div>
+            <p class="text-green-200">&copy; 2025 Rajbari Integrated Farming Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Back to Top Button functionality
+        const backToTopButton = document.querySelector('.back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Mobile Menu functionality
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuButton.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
